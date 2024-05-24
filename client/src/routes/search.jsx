@@ -4,7 +4,7 @@ import InputMask from 'react-input-mask';
 import { useNavigate } from "react-router-dom";
 import { green } from '@mui/material/colors';
 import checkData from '../functions/checkData';
-// const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
 function Search() {
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
@@ -40,7 +40,7 @@ function Search() {
       setSuccess(false);
       setLoading(true);
       await checkData(formData.phone)
-        .then(res => {typeof res.message === 'string' ? alert(res.message) : navigate(`/finded/${formData.phone}`)})
+        .then(res => {typeof res.message === 'string' ? navigate(`/notFinded`) : navigate(`/finded/${formData.phone}`)})
         .catch(e => console.error(e.message))
     }
     setSuccess(true);
@@ -50,7 +50,6 @@ function Search() {
   return (
     <Container maxWidth="sm" sx={{marginTop: 15}}>
       <Typography variant="h4" gutterBottom sx={{textAlign: 'center'}}>
-        Проверка номера телефона
       </Typography>
       <form onSubmit={handleSubmit} style={{alignContent: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
         <Box mb={2}>

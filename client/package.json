@@ -18,7 +18,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-app-env --env-file=configs/local.env start",
+    "start": "react-app-env --env-file=configs/.env start",
     "build": "react-dotenv && react-scripts build",
     "test": "react-dotenv && react-scripts test",
     "eject": "react-dotenv && react-scripts eject"

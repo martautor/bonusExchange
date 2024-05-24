@@ -61,7 +61,7 @@ window.env = {
   "PROMPT": "$P$G",
   "PSModulePath": "C:\\Users\\PC\\Documents\\WindowsPowerShell\\Modules;C:\\Program Files\\WindowsPowerShell\\Modules;C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules;C:\\Program Files (x86)\\Microsoft SQL Server\\150\\Tools\\PowerShell\\Modules\\;C:\\Program Files (x86)\\Microsoft SQL Server\\160\\Tools\\PowerShell\\Modules\\",
   "PUBLIC": "C:\\Users\\Public",
-  "SERVER_HOST": "http://localhost:5000",
+  "SERVER_HOST": "http://192.168.0.17:5000",
   "SESSIONNAME": "Console",
   "SystemDrive": "C:",
   "SystemRoot": "C:\\Windows",

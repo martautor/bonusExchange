@@ -18,14 +18,15 @@ const UserInfoField = ({ label, value }) => {
 
 const InfoField = (props) => {
     console.log(props)
-  return (
+  return (<>
+      <h2>Данные уже перенесены.</h2>
+      <h3>Найдена информация по данной карте:</h3>
     <div style={{display: 'flex', flexDirection: 'column', width: 300, textAlign: 'center'}}>
+      
       <UserInfoField label="Номер телефона" value={props.data.customer.login} />
       <UserInfoField label="Номер карты" value={props.data.card.cardNumber} />
-      <UserInfoField label="Количество баллов" value={props.data.markParameters.mark} />
-      <UserInfoField label="ФИО" value={props.data.customer.fio} />
     </div>
-  );
+    </>);
 };
 
 export default InfoField;

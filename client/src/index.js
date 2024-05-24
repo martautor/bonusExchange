@@ -9,18 +9,23 @@ import Search from "./routes/search";
 import checkData from "./functions/checkData";
 import NotFoundPage from "./routes/notFound";
 import './css/index.css'
+import NotFinded from "./routes/notFinded";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Search />,
   },
   {
-        path: "/finded/:phone",
-        element: <Finded />,
-        errorElement: <NotFoundPage/>,
-        loader: async ({ params }) => {
-          return checkData(params.phone)
-        },
+    path: "/finded/:phone",
+    element: <Finded />,
+    errorElement: <NotFoundPage/>,
+    loader: async ({ params }) => {
+    return checkData(params.phone)
+    },
+  },
+  {
+    path: "/notFinded",
+    element: <NotFinded/>
   },
   {
     path: "*",
