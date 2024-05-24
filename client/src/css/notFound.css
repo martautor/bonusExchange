@@ -1,0 +1,23 @@
+.error-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8d7da; /* light red */
+  }
+  
+  h1 {
+    font-size: 4rem;
+    color: #721c24; /* dark red */
+  }
+  
+  p {
+    font-size: 1.5rem;
+    color: #721c24; /* dark red */
+  }
+  a {
+    color: #721c24;
+    text-decoration: none; /* no underline */
+  }
+  

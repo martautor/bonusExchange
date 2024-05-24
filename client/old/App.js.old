@@ -1,0 +1,140 @@
+import React, { useState } from 'react';
+import { Container, TextField, Button, Typography, Box, CircularProgress } from '@mui/material';
+import InputMask from 'react-input-mask';
+import checkData from './functions/checkData';
+import { green } from '@mui/material/colors';
+// const isMobile = window.matchMedia("(max-width: 768px)").matches;
+function App() {
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+
+  const buttonSx = {
+    ...(success && {
+      bgcolor: green[500],
+      '&:hover': {
+        bgcolor: green[700],
+      },
+    }),
+  };
+
+  const [formData, setFormData] = useState({
+    lastName: '',
+    firstName: '',
+    middleName: '',
+    birthDate: '',
+    phone: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (!loading) {
+      setSuccess(false);
+      setLoading(true);
+      setTimeout(async () => {
+        await checkData(formData)
+        setSuccess(true);
+        setLoading(false);
+      }, 3000)
+    }
+  };
+
+  return (
+    <Container maxWidth="sm" sx={{marginTop: 15}}>
+      <Typography variant="h4" gutterBottom sx={{textAlign: 'center'}}>
+        Ввод данных
+      </Typography>
+      <form onSubmit={handleSubmit} style={{alignContent: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+        <Box mb={2}>
+          <TextField
+            fullWidth
+            variant="outlined"
+            label="Фамилия"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
+        </Box>
+        <Box mb={2}>
+          <TextField
+            fullWidth
+            variant="outlined"
+            label="Имя"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+        </Box>
+        <Box mb={2}>
+          <TextField
+            fullWidth
+            variant="outlined"
+            label="Отчество"
+            name="middleName"
+            value={formData.middleName}
+            onChange={handleChange}
+          />
+        </Box>
+        <Box mb={2}>
+          <TextField
+            fullWidth
+            variant="outlined"
+            label="День рождения"
+            type="date"
+            name="birthDate"
+            value={formData.birthDate}
+            onChange={handleChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            required
+          />
+        </Box>
+        <Box mb={2}>
+          <InputMask
+            mask="+7(999)999-99-99"
+            value={formData.phone}
+            onChange={handleChange}
+            maskChar={null}
+          >
+            {() => (
+              <TextField
+                fullWidth
+                variant="outlined"
+                label="Телефон"
+                name="phone"
+                required
+              />
+            )}
+          </InputMask>
+        </Box>
+        <Button variant="contained" color="primary" type="submit" disabled={loading} sx={buttonSx}>
+          Отправить
+        </Button>
+        {loading && (
+          <CircularProgress
+            size={24}
+            sx={{
+              color: 'green',
+              position: 'absolute',
+              top: '60%',
+              left: '50%',
+              marginTop: '-15px',
+              marginLeft: '-12px',
+            }}
+          />)}
+      </form>
+    </Container>
+  );
+}
+
+export default App;
