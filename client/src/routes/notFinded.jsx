@@ -12,7 +12,7 @@ export default function notFinded() {
         <div style={{display: 'flex'}}>
             <div style={{display: 'grid', justifyItems: 'center'}}>
                 <img src="http://qrcoder.ru/code/?https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dru.mobint.pivmarket1%26pcampaignid%3Dweb_share&4&0" style={{width: 180, height: 180}} alt="google_qr-code" />
-                <a href="https://play.google.com/store/apps/details?id=ru.mobint.pivmarket1&pcampaignid=web_share" target="_blank" rel="noreferrer"><img src={google} style={{width: 150, height: 45}} alt='google'/></a>
+                <a href="https://play.google.com/store/apps/details?id=ru.mobint.pivmarket1&pcampaignid=web_share" target="_blank" rel="noreferrer"><img src={google} style={{width: 150, height: 49}} alt='google'/></a>
             </div>
             <div style={{display: 'grid', justifyItems: 'center'}}>
                 <img src='http://qrcoder.ru/code/?https%3A%2F%2Fapps.apple.com%2Fru%2Fapp%2F%25D0%25BF%25D0%25B8%25D0%25B2%25D0%25BC%25D0%25B0%25D1%2580%25D0%25BA%25D0%25B5%25D1%2582-1%2Fid6473837140&4&0' alt='appstore_qr-code'/>
