@@ -19,7 +19,8 @@ const Finded = () => {
         }
     }
     
-    return (<div style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', alignContent: 'center', alignItems: 'center', height: '100vh', marginTop: -50}}>
+    return (<div 
+    style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', alignContent: 'center', alignItems: 'center', height: '100vh'}}>
         {render(data)}
         <Link to='/' style={{color:'green'}}><Button variant="outlined" color='success'> На главную </Button></Link>
 

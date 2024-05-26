@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Box, CircularProgress } from '@mui/material';
 import InputMask from 'react-input-mask';
 import { useNavigate } from "react-router-dom";
-import { green } from '@mui/material/colors';
+import { green, brown } from '@mui/material/colors';
 import checkData from '../functions/checkData';
 
 function Search() {
@@ -10,7 +10,12 @@ function Search() {
   const [success, setSuccess] = React.useState(false);
   const navigate = useNavigate();
   const buttonSx = {
-    ...(success && {
+    ...(!success ? {
+      bgcolor: brown[400],
+      '&:hover': {
+        bgcolor: brown[700],
+      },
+      } : {
       bgcolor: green[500],
       '&:hover': {
         bgcolor: green[700],
@@ -40,7 +45,7 @@ function Search() {
       setSuccess(false);
       setLoading(true);
       await checkData(formData.phone)
-        .then(res => {typeof res.message === 'string' ? navigate(`/notFinded`) : navigate(`/finded/${formData.phone}`)})
+        .then(res => {typeof res.message === 'string' ? navigate(`/card/notFinded`) : navigate(`/card/${formData.phone}`)})
         .catch(e => console.error(e.message))
     }
     setSuccess(true);
@@ -48,8 +53,9 @@ function Search() {
   };
 
   return (
-    <Container maxWidth="sm" sx={{marginTop: 15}}>
+    <Container maxWidth="sm" sx={{marginTop: 1, height: '100vh', maxHeight: '80vh', display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', alignContent: 'center', justifyContent: 'center'}}>
       <Typography variant="h4" gutterBottom sx={{textAlign: 'center'}}>
+        Введите номер телефона:
       </Typography>
       <form onSubmit={handleSubmit} style={{alignContent: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
         <Box mb={2}>
@@ -65,12 +71,13 @@ function Search() {
                 variant="outlined"
                 label="Телефон"
                 name="phone"
+                color='grey'
                 required
               />
             )}
           </InputMask>
         </Box>
-        <Button variant="contained" color="primary" type="submit" disabled={loading} sx={buttonSx}>
+        <Button variant="contained" type="submit" disabled={loading} sx={buttonSx}>
           Отправить {loading && (
           <CircularProgress
             size={24}
