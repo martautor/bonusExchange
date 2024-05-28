@@ -23,6 +23,7 @@
     "start": "react-app-env --env-file=configs/.env start",
     "dev": "react-app-env --env-file=configs/.env.dev start",
     "build": "react-app-env --env-file=configs/.env build",
+    "dev-build": "react-app-env --env-file=configs/.env.dev build",
     "test": "react-dotenv && react-scripts test",
     "eject": "react-dotenv && react-scripts eject"
   },
