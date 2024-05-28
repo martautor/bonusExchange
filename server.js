@@ -135,11 +135,12 @@ async function findData(clientData) {
 
 const PORT = process.env.PORT
 
-// https
-//     .createServer(app)
-//     .listen(PORT, () => {
-//     console.log(`App listen on ${PORT}`)
-// })
+// const options = {
+//     cert: fs.readFileSync('/etc/letsencrypt/live/bonus.pm26.ru/fullchain.pem'),
+//     key: fs.readFileSync('/etc/letsencrypt/live/bonus.pm26.ru/privkey.pem')
+// };
+
+// https.createServer(options, app).listen(PORT);
 
 app.listen(PORT)
 console.log(`App listen on ${PORT}`)
