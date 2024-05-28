@@ -60,7 +60,6 @@ const Admin = () => {
         })
     }
     async function handleSubmit(e) {
-        e.preventDefault()
         setStatus(await sendAdminData(data))
         console.log(status)
         if(status.code === 1) {

@@ -31,11 +31,12 @@ export default function AdminContent(props) {
     
     
     function render() {
-            return (<List>
+            return (<List sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', alignContent: 'center', borderRadius: 5, height: '70vh', m: 3}}>
                 {Object.keys(data).map((value) => (<ListItem
+                sx={{border: '1px solid', borderRadius: 10, opacity: 0.8, width: 500, m: 1, p: 0}}
                     key={value}
                     >
-                        <MyModal key={value} card={data[value]} value={value}/>
+                    <MyModal key={value} card={data[value]} value={value}/>
                     </ListItem>
                 ))}
             </List>) 
@@ -43,7 +44,7 @@ export default function AdminContent(props) {
 
     return (<Container>
         <Typography variant="h7">
-        User: {props.data.user}
+        Список заявок:
         
         </Typography>
         {!loading && render()}
