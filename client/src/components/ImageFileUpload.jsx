@@ -39,6 +39,7 @@ const ImageFileUpload = () => {
       const formData = new FormData();
       formData.append("card", data.card)
       formData.append("phone", data.phone)
+      formData.append("completed", false)
       formData.append("file", selectedFile)
       console.log(data.card, data.phone)
       await checkData(formData)

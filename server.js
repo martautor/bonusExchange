@@ -5,6 +5,8 @@ const multer = require('multer');
 const path = require('path')
 const fs = require('fs');
 var cors = require('cors');
+const getAllFilesFromFolder = require("./getAllFilesFromFolder");
+const getDirectories = require("./getDirectories");
 const app = express()
 require('dotenv').config()
 
@@ -45,8 +47,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
+
 app.post('/api/checkData', upload.single('file'), function (req, res, next) {
     const data = req.body
+    const file = req.file
     console.log('data: ',JSON.stringify(data))
     res.json('Файл успешно загружен');
   });
@@ -75,6 +79,31 @@ app.post('/api/admin', (req, res) => {
         })
     }
     
+})
+app.use(express.static('upload'))
+const corsOptions = {
+    origin: 'https://bonus.pm26.ru',
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
+app.get('/api/getFolders', cors(corsOptions), async (req, res) => {
+    const all = getDirectories(__dirname + '/upload/')
+    console.log(all)
+    res.json({
+        ...all
+    })
+     
+})
+app.get('/api/getCurrentNumber', cors(corsOptions), async (req, res) => {
+    const card = req.query.card
+    if(card) {
+        console.log(card)
+        res.sendFile(__dirname + '/upload/' + card + '/card.png')
+    } else {
+        res.json({
+            message: 'error'
+        })
+    } 
 })
 async function findData(clientData) {
     console.log(clientData)

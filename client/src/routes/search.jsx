@@ -45,7 +45,7 @@ function Search() {
       setSuccess(false);
       setLoading(true);
       await findData(formData.phone)
-        .then(res => {typeof res.message === 'string' ? navigate(`/notFinded`) : navigate(`/${formData.phone}`)})
+        .then(res => {typeof res.message === 'string' ? navigate(`/notFinded`) : navigate(`card/${formData.phone}`)})
         .catch(e => {
           if(e.message === 'Failed to fetch') {
             alert('Ведутся технические работы.\nПо вопросам писать на почту: bonus@pm26.ru')

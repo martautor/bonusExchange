@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Paper, TextField, Button, ThemeProvider, createTheme, FormControl } from '@mui/material';
+import { Container, Paper, TextField, Button, ThemeProvider, createTheme } from '@mui/material';
 import sendAdminData from '../functions/sendAdminData';
-import Form from '../components/Form';
+// import Form from '../components/Form';
 import AdminBar from '../components/adminPanel/AdminBar';
 import AdminFooter from '../components/adminPanel/AdminFooter';
 import AdminContent from '../components/adminPanel/AdminContent';
@@ -53,7 +53,6 @@ const Admin = () => {
     })
 
     function handleChange(e) {
-        e.preventDefault()
         const {name, value} = e.target
         setData({
           ...data,

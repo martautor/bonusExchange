@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         element: <Search />,
       },
       {
-        path: ":phone",
+        path: "card/:phone",
         element: <Finded />,
         errorElement: <NotFoundPage/>,
         loader: async ({ params }) => {
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: ':phone/:card/confirmation',
+        path: 'card/:phone/:card/confirmation',
         element: <ImageFileUpload/>,
         loader: async ({params}) => {
           const data = {}

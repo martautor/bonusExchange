@@ -39,7 +39,7 @@ function Form(props) {
     if (!loading) {
       setSuccess(false);
       setLoading(true);
-      navigate(`/${props.data.customer.login}/${formData.card}/confirmation`)
+      navigate(`/card/${props.data.customer.login}/${formData.card}/confirmation`)
       setSuccess(true);
       setLoading(false);
     }
