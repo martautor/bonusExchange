@@ -6,13 +6,16 @@ import {
 import { createRoot } from 'react-dom/client';
 import Finded from "./routes/finded";
 import Search from "./routes/search";
-import checkData from "./functions/checkData";
+import checkData from "./functions/findData";
 import NotFoundPage from "./routes/notFound";
 import './css/index.css'
 import NotFinded from "./routes/notFinded";
-import Home from "./routes/home";
+// import Home from "./routes/home";
 import App from "./App";
 import About from "./routes/about";
+import ImageFileUpload from "./components/ImageFileUpload";
+import Admin from "./routes/admin";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,14 +23,10 @@ const router = createBrowserRouter([
     children: [
       {
         index: "/",
-        element: <Home />,
-      },
-      {
-        path: "/card",
         element: <Search />,
       },
       {
-        path: "/card/:phone",
+        path: ":phone",
         element: <Finded />,
         errorElement: <NotFoundPage/>,
         loader: async ({ params }) => {
@@ -35,19 +34,33 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: "/card/notFinded",
+        path: ':phone/:card/confirmation',
+        element: <ImageFileUpload/>,
+        loader: async ({params}) => {
+          const data = {}
+          data.phone = params.phone
+          data.card = params.card
+        return data
+        }
+      },
+      {
+        path: "/notFinded",
         element: <NotFinded/>
       },
       {
-        path: "/card/how",
+        path: "/how",
         element: <About/>
       },
+      {
+        path: "*",
+        element: <NotFoundPage/>
+      }
     ]
   },
   {
-    path: "*",
-    element: <NotFoundPage/>
-  }
+    path: "admin",
+    element: <Admin />
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(

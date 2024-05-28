@@ -3,7 +3,7 @@ import { Container, TextField, Button, Typography, Box, CircularProgress } from 
 import InputMask from 'react-input-mask';
 import { useNavigate } from "react-router-dom";
 import { green, brown } from '@mui/material/colors';
-import checkData from '../functions/checkData';
+import findData from '../functions/findData';
 
 function Search() {
   const [loading, setLoading] = React.useState(false);
@@ -16,9 +16,9 @@ function Search() {
         bgcolor: brown[700],
       },
       } : {
-      bgcolor: green[500],
+      bgcolor: brown[300],
       '&:hover': {
-        bgcolor: green[700],
+        bgcolor: brown[600],
       },
     }),
   };
@@ -44,22 +44,28 @@ function Search() {
     if (!loading) {
       setSuccess(false);
       setLoading(true);
-      await checkData(formData.phone)
-        .then(res => {typeof res.message === 'string' ? navigate(`/card/notFinded`) : navigate(`/card/${formData.phone}`)})
-        .catch(e => console.error(e.message))
+      await findData(formData.phone)
+        .then(res => {typeof res.message === 'string' ? navigate(`/notFinded`) : navigate(`/${formData.phone}`)})
+        .catch(e => {
+          if(e.message === 'Failed to fetch') {
+            alert('Ведутся технические работы.\nПо вопросам писать на почту: bonus@pm26.ru')
+          }
+          setSuccess(true);
+          setLoading(false);
+        })
     }
     setSuccess(true);
     setLoading(false);
   };
 
   return (
-    <Container maxWidth="sm" sx={{marginTop: 1, height: '100vh', maxHeight: '80vh', display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', alignContent: 'center', justifyContent: 'center'}}>
-      <Typography variant="h4" gutterBottom sx={{textAlign: 'center'}}>
-        Введите номер телефона:
+    <Container maxWidth="sm" sx={{marginTop: 1, display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', alignContent: 'center', justifyContent: 'flex-start'}}>
+      <Typography variant="h6" gutterBottom sx={{textAlign: 'center', color: brown[400]}}>
+        Для переноса введите пожалуйста ваш номер телефона
       </Typography>
-      <form onSubmit={handleSubmit} style={{alignContent: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-        <Box mb={2}>
-          <InputMask
+      <form onSubmit={handleSubmit} style={{textAlign: 'center', alignContent: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+        <Box mb={2} sx={{alignContent: 'left'}}>
+          <InputMask sx={{textAlign: 'left'}}
             mask="+7(999)999-99-99"
             value={formData.phone}
             onChange={handleChange}
@@ -67,6 +73,7 @@ function Search() {
           >
             {() => (
               <TextField
+                sx={{textAlign: 'left'}}
                 fullWidth
                 variant="outlined"
                 label="Телефон"

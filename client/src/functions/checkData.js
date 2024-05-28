@@ -1,8 +1,17 @@
 // import 'dotenv/config'
-export default async function checkData(phone) {
-    const number = phone.substring(1)
-    const formattedNumber = number.replace(/\D/g, "");
-    console.log(formattedNumber)
-    return await fetch(`http://localhost:5000/api/findData?phone=${formattedNumber}`)
+export default async function checkData(formData) {
+    // fetch(`${process.env.REACT_APP_SERVER_HOST}/api/checkFieldData`, {
+    //     method: 'POST',
+    //     body: formData
+    // })
+    // .then(res => res.json())
+    // .then(res => console.log(res))
+    // .catch(e => console.error(e.message))
+    return await fetch(`${process.env.REACT_APP_SERVER_HOST}/api/checkData`, {
+        method: 'POST',
+        body: formData
+    })
     .then(res => res.json())
+    .then(res => console.log(res))
+    .catch(e => console.error(e.message))
 }

@@ -1,29 +1,29 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import React from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import InfoField from '../components/infoField';
+import { brown } from '@mui/material/colors';
+import Form from '../components/Form';
 const Finded = () => {
     const data = useLoaderData()
     function render(data) {
         console.log(data.searchers[0].card == null)
         if (data.searchers[0].card == null) {
-            return (<div>
-                <h3>Ваша карта не найдена в системе BonusMoney</h3>
-                <h2>Пожалуйста заполните форму:</h2>
-                <script src="https://forms.yandex.ru/_static/embed.js"></script>
-                <iframe src="https://forms.yandex.ru/u/66503737d0468866632bd2f4/?iframe=1" style={{width:500, height:350, border: 0}} name="ya-form-66503737d0468866632bd2f4" ></iframe>
-                </div>)
+            return <Form data={data.searchers[0]}/>
         } else {
             return <InfoField data={data.searchers[0]}/>
         }
     }
     
     return (<div 
-    style={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', alignContent: 'center', alignItems: 'center', height: '100vh'}}>
+    style={{display: 'flex', flexDirection: 'column', alignContent: 'center', alignItems: 'center'}}>
         {render(data)}
-        <Link to='/' style={{color:'green'}}><Button variant="outlined" color='success'> На главную </Button></Link>
-
+        <Box sx={{mt: 5}}>
+        <Link to='/' style={{marginTop: 50, marginRight: 15}}><Button size='large' style={{backgroundColor:brown[400]}} variant='contained'> Назад </Button></Link>
+        <a href='https://pm26.ru' style={{ marginTop: 25}}><Button size='large' style={{backgroundColor:brown[800]}} variant="contained" color='success'> На главную </Button></a>
+        </Box>
+        
     </div>)
 }
 export default Finded;

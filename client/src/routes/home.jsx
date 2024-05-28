@@ -13,7 +13,7 @@ let theme = {
 }
 
 function content() {
-    return (<Paper elevation={6} sx={{display: 'flex', flexDirection: 'column', width: '100%', height: 'auto', backgroundColor: 'white'}}>
+    return (<Paper elevation={6} sx={{display: 'flex', flexDirection: 'column', backgroundColor: 'white', justifyContent: 'center'}}>
     <Typography variant="h4" sx={{textAlign: 'center'}}>
         Карта <ArrowForwardIcon sx={{position: 'relative', width: 25, mt: 5}}/> Приложение
         <hr style={{width: 400}}/>
