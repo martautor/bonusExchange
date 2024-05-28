@@ -18,17 +18,14 @@ export default function MyModal({card, value}) {
         async function fetchData() {
           const response = await getCurrentNumber(card)
           const blob = await response.blob()
-          Image.src = URL.createObjectURL(blob)
-          setFile(blob)
+          const newImage = URL.createObjectURL(blob)
+          setFile(newImage)
           const json = await getUserData(card)
           setData(json)
-        //   const res = await findData()
-        
         }
         fetchData()
         setLoading(false)
       }, [card]);
-      console.log(data)
     // console.log(globalData)
     return(<>
         <ListItemButton onClick={handleClick}>
@@ -54,7 +51,7 @@ export default function MyModal({card, value}) {
     <Typography gutterBottom>
         Фотография: 
         <Button>
-            <ImageGallery src={Image.src}/>
+            <ImageGallery src={file}/>
         </Button>
         {/* <img src={Image.src} alt="card"/> */}
     </Typography>
