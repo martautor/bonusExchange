@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import getCurrentNumber from "../functions/getCurrentNumber";
 import ImageGallery from "./ImageGallery";
 import { brown } from "@mui/material/colors";
+import getUserData from "../functions/getUserData";
 
 export default function MyModal({card, value}) {
     const [loading, setLoading] = useState(true)
@@ -12,18 +13,22 @@ export default function MyModal({card, value}) {
         setOpen(true)
     }
     const [file, setFile] = useState('')
-
+    const [data, setData] = useState('')
     useEffect(() => {
         async function fetchData() {
           const response = await getCurrentNumber(card)
           const blob = await response.blob()
           Image.src = URL.createObjectURL(blob)
+          setFile(blob)
+          const json = await getUserData(card)
+          setData(json)
         //   const res = await findData()
-        setFile(blob)
+        
         }
         fetchData()
         setLoading(false)
       }, [card]);
+      console.log(data)
     // console.log(globalData)
     return(<>
         <ListItemButton onClick={handleClick}>
@@ -41,7 +46,7 @@ export default function MyModal({card, value}) {
     </Typography>
     <DialogContent dividers>
     <Typography gutterBottom>
-        Номер телефона:
+        Номер телефона: {data.phone}
     </Typography>
     <Typography gutterBottom>
         Номер карты: {card}

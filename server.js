@@ -105,6 +105,17 @@ app.get('/api/getCurrentNumber', cors(corsOptions), async (req, res) => {
         })
     } 
 })
+app.get('/api/getUserData', cors(corsOptions), async (req, res) => {
+    const card = req.query.card
+    if(card) {
+        console.log(card)
+        res.sendFile(__dirname + '/upload/' + card + '/data.json')
+    } else {
+        res.json({
+            message: 'error'
+        })
+    } 
+})
 async function findData(clientData) {
     console.log(clientData)
     const search = {'search': clientData}
