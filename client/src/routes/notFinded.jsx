@@ -1,7 +1,3 @@
-import google from '../img/google.png'
-import appstore from '../img/appstore.png'
-import qrcodeGP from '../img/qr-codeGP.gif'
-import qrcodeAS from '../img/qr-codeAS.gif'
 import { Link } from 'react-router-dom'
 import { Button } from '@mui/material'
 import { brown } from '@mui/material/colors'
