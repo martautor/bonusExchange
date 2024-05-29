@@ -10,7 +10,7 @@ export default function Tasks(props) {
     console.log(props.tv)
     useEffect(() => {
         async function fetchData() {
-          const json = await getFolders(props.tv)
+          await getFolders(props.tv)
           .then(response => response.json())
           .then(json => {
             setData(json)

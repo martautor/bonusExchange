@@ -1,7 +1,5 @@
-import {Box, Button, Container, List, ListItem, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material"
-import { useEffect, useState } from "react";
-import getFolders from "../../functions/getFolders";
-import MyModal from "../MyModal";
+import { Container, ToggleButton, ToggleButtonGroup } from "@mui/material"
+import { useState } from "react";
 import { brown } from "@mui/material/colors";
 import Tasks from "./Tasks";
 
