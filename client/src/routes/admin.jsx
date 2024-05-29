@@ -5,6 +5,7 @@ import sendAdminData from '../functions/sendAdminData';
 import AdminBar from '../components/adminPanel/AdminBar';
 import AdminFooter from '../components/adminPanel/AdminFooter';
 import AdminContent from '../components/adminPanel/AdminContent';
+import { brown } from '@mui/material/colors';
 // Создаем тему с коричневым цветом
 const theme = createTheme({
   palette: {

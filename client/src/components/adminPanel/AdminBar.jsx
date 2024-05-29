@@ -31,7 +31,7 @@ function appBarData() {
         
         <Typography variant="h6" noWrap component="div" sx={{ color: 'wheat'}}>
           User: {localStorage.getItem('user')} &nbsp;
-          <Button variant='contained' onClick={handleQuit} sx={{backgroundColor: brown[400], width: 'auto'}}>Выйти</Button>
+          <Button variant='contained' onClick={handleQuit} sx={{backgroundColor: brown[400], width: 'auto'}}>Выход</Button>
         </Typography>
       </Toolbar>
     );
@@ -40,7 +40,7 @@ function appBarData() {
   const defaultTheme = createTheme({
     palette: {
       primary: {
-        main: brown.A700,
+        main: brown[900],
       },
       link: {
         main: '#ffffff'
