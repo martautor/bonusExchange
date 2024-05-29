@@ -6,7 +6,6 @@ import { brown } from "@mui/material/colors";
 import getUserData from "../functions/getUserData";
 
 export default function MyModal({card, value}) {
-    const [loading, setLoading] = useState(true)
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
     const handleClick = (e) => {
@@ -24,9 +23,16 @@ export default function MyModal({card, value}) {
           setData(json)
         }
         fetchData()
-        setLoading(false)
       }, [card]);
-    // console.log(globalData)
+    
+    const handleChange = async (e) => {
+        e.preventDefault()
+        await fetch(`${process.env.REACT_APP_SERVER_HOST}/api/updateTaskState?card=${card}&key=${!data.completed}`, {
+            method: 'PATCH'
+        })
+        window.location.reload()
+        setOpen(false)
+    }
     return(<>
         <ListItemButton onClick={handleClick}>
             [{value}]<ListItemText primary={` \nНомер карты: ${card}`}></ListItemText>
@@ -53,8 +59,14 @@ export default function MyModal({card, value}) {
         <Button>
             <ImageGallery src={file}/>
         </Button>
-        {/* <img src={Image.src} alt="card"/> */}
     </Typography>
+    <Typography gutterBottom>
+        Статус: {data.completed ? 'Открыт' : 'Закрыт'} 
+        <Button onClick={handleChange} sx={{backgroundColor: brown[400], ml: 1}} size='small' variant='contained'>
+        {!data.completed ? 'Открыть' : 'Закрыть'} 
+    </Button>
+    </Typography>
+    
     </DialogContent>
     <DialogActions>
     <Button sx={{color: brown[400]}} size='small' variant='text' autoFocus onClick={handleClose}>

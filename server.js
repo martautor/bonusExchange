@@ -51,7 +51,7 @@ const upload = multer({ storage: storage })
 app.post('/api/checkData', upload.single('file'), function (req, res, next) {
     const data = req.body
     const file = req.file
-    console.log('data: ',JSON.stringify(data))
+    // console.log('data: ',JSON.stringify(data))
     res.json('Файл успешно загружен');
   });
 // app.post('/api/checkFieldData', upload.none(), function (req, res, next) {
@@ -63,8 +63,8 @@ app.post('/api/checkData', upload.single('file'), function (req, res, next) {
 app.use(express.json())
 app.post('/api/admin', (req, res) => {
     const jsonData = req.body
-    console.log(jsonData.login, jsonData.pass)
-    if(jsonData.login === 'admin' && jsonData.pass === '357864') {
+    // console.log(jsonData.login, jsonData.pass)
+    if(jsonData.login == 'admin' && jsonData.pass == '357864') {
         res.status(200)
         res.json({
             code: 1,
@@ -87,17 +87,43 @@ const corsOptions = {
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   }
 app.get('/api/getFolders', cors(corsOptions), async (req, res) => {
+    const method = req.query.method
     const all = getDirectories(__dirname + '/upload/')
-    console.log(all)
-    res.json({
-        ...all
+    const trueTasks = []
+    const falseTasks = []
+    all.map(card => {
+        const fileName = __dirname + '/upload/' + card + '/data.json'
+        const file = require(fileName)
+        console.log(file)
+        if(file.completed === 'true') {
+            trueTasks.push(file.card)
+        } else {
+            falseTasks.push(file.card)
+        }
     })
-     
+    console.log(method)
+    if(method === undefined || method === null || method === '') {
+        res.json({
+            ...all
+        })
+        return
+    }
+    if(method === 'true') {
+        console.log(...trueTasks)
+        res.json({
+            ...trueTasks
+        })
+        return
+    } else {
+        res.json({
+            ...falseTasks
+        })
+        return
+    }
 })
 app.get('/api/getCurrentNumber', cors(corsOptions), async (req, res) => {
     const card = req.query.card
     if(card) {
-        console.log(card)
         res.sendFile(__dirname + '/upload/' + card + '/card.png')
     } else {
         res.json({
@@ -108,7 +134,6 @@ app.get('/api/getCurrentNumber', cors(corsOptions), async (req, res) => {
 app.get('/api/getUserData', cors(corsOptions), async (req, res) => {
     const card = req.query.card
     if(card) {
-        console.log(card)
         res.sendFile(__dirname + '/upload/' + card + '/data.json')
     } else {
         res.json({
@@ -116,8 +141,35 @@ app.get('/api/getUserData', cors(corsOptions), async (req, res) => {
         })
     } 
 })
+app.get('/api/taskState', (req, res, next) => {
+    const card = req.query.card
+    const fileName = __dirname + '/upload/' + card + '/data.json';
+    const file = require(fileName);
+    res.json({
+        message: card,
+        completed: file.completed
+    })
+})
+app.patch('/api/updateTaskState',  cors(corsOptions), (req, res, next) => {
+    const card = req.query.card
+    const key = req.query.key
+    const fileName = __dirname + '/upload/' + card + '/data.json';
+    const file = require(fileName);
+    file.completed = (key === 'true')
+    fs.writeFile(fileName, JSON.stringify(file), function writeJSON(err) {
+        if (err) return res.json({
+            message: err.message
+        });
+        console.log(JSON.stringify(file));
+        console.log('writing to ' + fileName);
+        res.status(200)
+        return res.json({
+            message: 'OK'
+        })
+    });
+})
 async function findData(clientData) {
-    console.log(clientData)
+    // console.log(clientData)
     const search = {'search': clientData}
     return await fetch('https://api.bm-app.com/search', {
         method: 'POST',
@@ -131,7 +183,6 @@ async function findData(clientData) {
     // .then(async response => {data.status = response.status; data.json = await response.json()})
     // .then(response => data)
 }
-
 
 const PORT = process.env.PORT
 

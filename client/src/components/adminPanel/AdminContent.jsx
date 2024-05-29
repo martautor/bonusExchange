@@ -1,7 +1,9 @@
-import {Container, List, ListItem, Typography } from "@mui/material"
+import {Box, Button, Container, List, ListItem, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material"
 import { useEffect, useState } from "react";
 import getFolders from "../../functions/getFolders";
 import MyModal from "../MyModal";
+import { brown } from "@mui/material/colors";
+import Tasks from "./Tasks";
 
 // const style = {
 //     position: 'absolute',
@@ -16,37 +18,26 @@ import MyModal from "../MyModal";
 //   };
 
 export default function AdminContent(props) {
-    const [loading, setLoading] = useState(true)
-    const [data, setData] = useState({});
+    const [alignment, setAlignment] = useState('all');
 
-    useEffect(() => {
-        async function fetchData() {
-          const response = await getFolders()
-          const json = await response.json()
-          setData(await json)
-        }
-        fetchData()
-        setLoading(false)
-      }, []);
+    const handleChange = (event, newAlignment) => {
+        setAlignment(newAlignment);
+    };
     
-    
-    function render() {
-            return (<List sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', alignContent: 'center', borderRadius: 5, height: '70vh', m: 3}}>
-                {Object.keys(data).map((value) => (<ListItem
-                sx={{border: '1px solid', borderRadius: 10, opacity: 0.8, width: 500, m: 1, p: 0}}
-                    key={value}
-                    >
-                    <MyModal key={value} card={data[value]} value={value}/>
-                    </ListItem>
-                ))}
-            </List>) 
-        }
-
     return (<Container>
-        <Typography variant="h7">
-        Список заявок:
-        
-        </Typography>
-        {!loading && render()}
+        <ToggleButtonGroup
+            sx={{color: brown[200], position: 'absolute', top: 125}}
+            value={alignment}
+            exclusive
+            onChange={handleChange}
+            aria-label="Platform"
+            >
+            <ToggleButton value="all">Все</ToggleButton>
+            <ToggleButton value="opened">Открытые</ToggleButton>
+            <ToggleButton value="closed">Закрытые</ToggleButton>
+        </ToggleButtonGroup>
+        {alignment === 'all' && <Tasks tv=''/>}
+        {alignment === 'opened' && <Tasks tv='true'/>}
+        {alignment === 'closed' && <Tasks tv='false'/>}
     </Container>)
 }

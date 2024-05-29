@@ -59,13 +59,19 @@ const Admin = () => {
           [name]: value
         })
     }
+    // async function checkData() {
+    //   setStatus()
+
+    // }
     async function handleSubmit(e) {
-        setStatus(await sendAdminData(data))
-        console.log(status)
-        if(status.code === 1) {
+        e.preventDefault()
+        const response = await sendAdminData(data)
+        setStatus(response)
+        console.log(response)
+        if(response.code === 1) {
             setLogged(1)
             localStorage.setItem('logged', 1)
-            localStorage.setItem('user', status.user)
+            localStorage.setItem('user', response.user)
             console.log('Успешно')
         } else {
             localStorage.setItem('logged', 1)
