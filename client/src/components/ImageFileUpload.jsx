@@ -49,7 +49,8 @@ const ImageFileUpload = () => {
         }
       })
       alert('Спасибо за обращение!')
-      navigate('/')
+      // navigate('/')
+      window.location.assign('https://pm26.ru')
     } else {
       setError("Выберите файл");
     }
