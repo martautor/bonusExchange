@@ -83,7 +83,6 @@ app.post('/api/admin', (req, res) => {
 app.use(express.static('upload'))
 const corsOptions = {
     origin: 'https://bonus.pm26.ru',
-    origin: 'http://localhost:3000',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   }
 app.get('/api/getFolders', cors(corsOptions), async (req, res) => {
@@ -95,19 +94,20 @@ app.get('/api/getFolders', cors(corsOptions), async (req, res) => {
         const fileName = __dirname + '/upload/' + card + '/data.json'
         const file = require(fileName)
         console.log(file)
-        if(file.completed === 'true') {
+        if(file.completed === false) {
             trueTasks.push(file.card)
         } else {
             falseTasks.push(file.card)
         }
     })
-    console.log(method)
+    // console.log(method)
     if(method === undefined || method === null || method === '') {
         res.json({
             ...all
         })
         return
     }
+    console.log(method === 'false')
     if(method === 'true') {
         console.log(...trueTasks)
         res.json({
@@ -155,7 +155,7 @@ app.patch('/api/updateTaskState',  cors(corsOptions), (req, res, next) => {
     const key = req.query.key
     const fileName = __dirname + '/upload/' + card + '/data.json';
     const file = require(fileName);
-    file.completed = (key === 'true')
+    file.completed = !file.completed
     fs.writeFile(fileName, JSON.stringify(file), function writeJSON(err) {
         if (err) return res.json({
             message: err.message
@@ -186,12 +186,12 @@ async function findData(clientData) {
 
 const PORT = process.env.PORT
 
-// const options = {
-//     cert: fs.readFileSync('/etc/letsencrypt/live/bonus.pm26.ru/fullchain.pem'),
-//     key: fs.readFileSync('/etc/letsencrypt/live/bonus.pm26.ru/privkey.pem')
-// };
+const options = {
+    cert: fs.readFileSync('/etc/letsencrypt/live/bonus.pm26.ru/fullchain.pem'),
+    key: fs.readFileSync('/etc/letsencrypt/live/bonus.pm26.ru/privkey.pem')
+};
 
-// https.createServer(options, app).listen(PORT);
+https.createServer(options, app).listen(PORT);
 
-app.listen(PORT)
+// app.listen(PORT)
 console.log(`App listen on ${PORT}`)
