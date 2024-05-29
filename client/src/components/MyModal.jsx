@@ -61,9 +61,9 @@ export default function MyModal({card, value}) {
         </Button>
     </Typography>
     <Typography gutterBottom>
-        Статус: {data.completed ? 'Открыт' : 'Закрыт'} 
+        Статус: {!data.completed ? 'Открыт' : 'Закрыт'} 
         <Button onClick={handleChange} sx={{backgroundColor: brown[400], ml: 1}} size='small' variant='contained'>
-        {!data.completed ? 'Открыть' : 'Закрыть'} 
+        {data.completed ? 'Открыть' : 'Закрыть'} 
     </Button>
     </Typography>
     

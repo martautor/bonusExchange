@@ -95,19 +95,20 @@ app.get('/api/getFolders', cors(corsOptions), async (req, res) => {
         const fileName = __dirname + '/upload/' + card + '/data.json'
         const file = require(fileName)
         console.log(file)
-        if(file.completed === 'true') {
+        if(file.completed === false) {
             trueTasks.push(file.card)
         } else {
             falseTasks.push(file.card)
         }
     })
-    console.log(method)
+    // console.log(method)
     if(method === undefined || method === null || method === '') {
         res.json({
             ...all
         })
         return
     }
+    console.log(method === 'false')
     if(method === 'true') {
         console.log(...trueTasks)
         res.json({
@@ -155,7 +156,7 @@ app.patch('/api/updateTaskState',  cors(corsOptions), (req, res, next) => {
     const key = req.query.key
     const fileName = __dirname + '/upload/' + card + '/data.json';
     const file = require(fileName);
-    file.completed = (key === 'true')
+    file.completed = !file.completed
     fs.writeFile(fileName, JSON.stringify(file), function writeJSON(err) {
         if (err) return res.json({
             message: err.message
