@@ -16,23 +16,23 @@ import Tasks from "./Tasks";
 //   };
 
 export default function AdminContent(props) {
-    const [alignment, setAlignment] = useState('all');
+    const [alignment, setAlignment] = useState('opened');
 
     const handleChange = (event, newAlignment) => {
         setAlignment(newAlignment);
     };
     
-    return (<Container>
+    return (<Container sx={{display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
         <ToggleButtonGroup
-            sx={{color: brown[200], position: 'absolute', top: 125}}
+            sx={{ color: brown[200], position: 'absolute', top: 125, alignSelf: 'center'}}
             value={alignment}
             exclusive
             onChange={handleChange}
             aria-label="Platform"
             >
-            <ToggleButton value="all">Все</ToggleButton>
             <ToggleButton value="opened">Открытые</ToggleButton>
             <ToggleButton value="closed">Закрытые</ToggleButton>
+            <ToggleButton value="all">Все</ToggleButton>
         </ToggleButtonGroup>
         {alignment === 'all' && <Tasks tv=''/>}
         {alignment === 'opened' && <Tasks tv='true'/>}

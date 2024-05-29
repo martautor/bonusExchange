@@ -8,7 +8,7 @@ import { brown } from "@mui/material/colors";
 export default function AdminFooter() {
   return (
     <Box
-      sx={{ backgroundColor: brown[700],
+      sx={{ backgroundColor: brown[900],
         p: 5,
       }}
       component="footer"

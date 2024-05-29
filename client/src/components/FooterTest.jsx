@@ -23,7 +23,10 @@ export default function FooterTest() {
           {"."}
         </Typography>
         <Typography variant="body2" color={brown[100]} align="center">
-          {"Помощь и поддержка: bonus@pm26.ru"}
+          {"Помощь и поддержка клиентов: bonus@pm26.ru"}
+        </Typography>
+        <Typography variant="body2" color={brown[100]} align="center">
+          {"Разработка: Martun Mkrtchyan <mart@kassa26.ru>"}
         </Typography>
       </Container>
     </Box>
