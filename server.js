@@ -25,19 +25,19 @@ app.get('/api/findData', async function (req, res) {
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const json = JSON.stringify(req.body)
+        console.log(req.body.comment)
         const dName = req.body.card
-    // const date = Date.now()
-    fs.mkdir(path.join(__dirname + '/upload/', String(dName)),
-      (err) => {
-          if (err) {
-            if (err.message.startsWith('EEXIST')) {
-                return console.error('[Ошибка] Файл уже существует');
+        fs.mkdir(path.join(__dirname + '/upload/', String(dName)),
+        (err) => {
+            if (err) {
+              if (err.message.startsWith('EEXIST')) {
+                  return console.error('[Ошибка] Файл уже существует');
+              }
+            } else {
+              
             }
-          } else {
-            fs.writeFileSync(`upload/${dName}/data.json`, json)
-          }
-          console.log('Directory created successfully!');
-      })
+            console.log('Directory created successfully!');
+        })
     cb(null, `upload/${dName}`);
     },
     filename: function (req, file, cb) {
@@ -49,8 +49,10 @@ const upload = multer({ storage: storage })
 
 
 app.post('/api/checkData', upload.single('file'), function (req, res, next) {
-    const data = req.body
-    const file = req.file
+    const json = JSON.stringify(req.body)
+    console.log(req.body)
+    const dName = req.body.card
+    fs.writeFileSync(`upload/${dName}/data.json`, json)
     // console.log('data: ',JSON.stringify(data))
     res.json('Файл успешно загружен');
   });
