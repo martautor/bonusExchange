@@ -24,7 +24,7 @@ export default function Tasks(props) {
         fetchData()
         
       }, [props.tv])
-
+      console.log(data)
       const render = () => {
         return (<List sx={{display: 'flex', flexWrap: 'wrap', flexDirection: 'column', justifyContent: 'center', alignContent: 'center', borderRadius: 5, height: 'auto', m: 10}}>
             {Object.keys(data).map((value) => (<ListItem

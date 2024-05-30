@@ -66,7 +66,9 @@ export default function MyModal({card, value}) {
         {data.completed ? 'Открыть' : 'Закрыть'} 
     </Button>
     </Typography>
-    
+    <Typography>
+        Комментарий: {data.comment ?? 'Нет.'}
+    </Typography>
     </DialogContent>
     <DialogActions>
     <Button sx={{color: brown[400]}} size='small' variant='text' autoFocus onClick={handleClose}>

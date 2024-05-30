@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Button, Typography, Box, Container } from "@mui/material";
+import { Button, Typography, Box, Container, TextField } from "@mui/material";
 import { brown } from "@mui/material/colors";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData
+  // ,useNavigate 
+} from "react-router-dom";
 import checkData from "../functions/checkData";
 
 const MAX_FILE_SIZE_MB = 5;
@@ -10,9 +12,10 @@ const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png", "image/gif"];
 const ImageFileUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState(null);
+  const [comment, setComment] = useState('')
   const data = useLoaderData()
-  console.log(data)
-  const navigate = useNavigate()
+
+  // const navigate = useNavigate()
   const handleFileChange = (event) => {
     const file = event.target.files[0];
 
@@ -39,15 +42,16 @@ const ImageFileUpload = () => {
       const formData = new FormData();
       formData.append("card", data.card)
       formData.append("phone", data.phone)
-      formData.append("completed", false)
+      formData.append("completed", true)
       formData.append("file", selectedFile)
-      console.log(data.card, data.phone)
+      formData.append("comment", comment)
       await checkData(formData)
       .catch(e => {
         if(e.message === 'Failed to fetch') {
           alert('Ведутся технические работы.\nПо вопросам писать на почту: bonus@pm26.ru')
         }
       })
+      console.log(formData.get('comment'))
       alert('Спасибо за обращение!')
       // navigate('/')
       window.location.assign('https://pm26.ru')
@@ -55,7 +59,11 @@ const ImageFileUpload = () => {
       setError("Выберите файл");
     }
   };
-
+  
+  const handleChange = (e) => {
+    setComment(e.target.value)
+    console.log(comment)
+  }
   return (<Container maxWidth="sm" sx={{marginTop: 1, display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', alignContent: 'center', justifyContent: 'flex-start', alignItems: 'center'}}>
     <Typography variant="h6" gutterBottom sx={{textAlign: 'center', color: brown[400]}}>
         Приложите фотографию карты для того чтобы мы могли удостовериться в том что она ваша!
@@ -87,6 +95,17 @@ const ImageFileUpload = () => {
         </Typography>
       )}
     </Box>
+    <Typography sx={{ mb: 1}}>
+      Доп. комментарий
+    </Typography>
+    <TextField
+          onChange={handleChange}
+          id="outlined-multiline-static"
+          label="Комментарий"
+          multiline
+          color='grey'
+          rows={5}
+        />
     <Button
             variant="contained"
             color="inherit"
@@ -94,7 +113,7 @@ const ImageFileUpload = () => {
             onClick={handleUpload}
             mt={2}
           >
-            Загрузить
+            Отправить
           </Button>
   </Container>);
 };
