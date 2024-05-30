@@ -24,8 +24,6 @@ app.get('/api/findData', async function (req, res) {
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const json = JSON.stringify(req.body)
-        console.log(req.body.comment)
         const dName = req.body.card
         fs.mkdir(path.join(__dirname + '/upload/', String(dName)),
         (err) => {
@@ -49,10 +47,13 @@ const upload = multer({ storage: storage })
 
 
 app.post('/api/checkData', upload.single('file'), function (req, res, next) {
-    const json = JSON.stringify(req.body)
+    const json = req.body
     console.log(req.body)
     const dName = req.body.card
-    fs.writeFileSync(`upload/${dName}/data.json`, json)
+    
+    json.comment = (json.comment === 'true')
+    console.log(json)
+    fs.writeFileSync(`upload/${dName}/data.json`, JSON.stringify(json))
     // console.log('data: ',JSON.stringify(data))
     res.json('Файл успешно загружен');
   });
