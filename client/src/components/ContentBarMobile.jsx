@@ -13,6 +13,7 @@ import { Box, Button, Drawer } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
 function appBarData() {
+
     return (
       <Box sx={{display:'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center', alignItems: 'center'}}>
         <Link to='/'>
