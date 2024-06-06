@@ -15,9 +15,7 @@ app.use(cors())
 app.get('/api/findData', async function (req, res) {
     let status = 404
     let msg = undefined
-    console.log(req.query.phone)
     await findData(req.query.phone)
-        // .then(res => console.log(res))
         // .then(response => response.json())
         .then(response => res.json(response))
 })
@@ -50,9 +48,10 @@ app.post('/api/checkData', upload.single('file'), function (req, res, next) {
     const json = req.body
     console.log(req.body)
     const dName = req.body.card
-    
-    json.comment = (json.comment === 'true')
-    console.log(json)
+    json.completed = !(json.completed === 'true')
+    console.log(json.completed)
+    // json.comment = (json.comment === 'true')
+    // console.log(json)
     fs.writeFileSync(`upload/${dName}/data.json`, JSON.stringify(json))
     // console.log('data: ',JSON.stringify(data))
     res.json('Файл успешно загружен');
@@ -93,16 +92,22 @@ app.get('/api/getFolders', cors(corsOptions), async (req, res) => {
     const all = getDirectories(__dirname + '/upload/')
     const trueTasks = []
     const falseTasks = []
+    if(all) {
     all.map(card => {
-        const fileName = __dirname + '/upload/' + card + '/data.json'
-        const file = require(fileName)
-        console.log(file)
-        if(file.completed === false) {
-            trueTasks.push(file.card)
-        } else {
-            falseTasks.push(file.card)
-        }
-    })
+            const fileName = __dirname + '/upload/' + card + '/data.json'
+            const file = require(fileName)
+            console.log(file)
+            if(file.completed === false) {
+                trueTasks.push(file.card)
+            } else {
+                falseTasks.push(file.card)
+            }
+        })
+    } else {
+        res.json({
+            message: "Error"
+        })
+    }
     // console.log(method)
     if(method === undefined || method === null || method === '') {
         res.json({
