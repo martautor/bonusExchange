@@ -1,17 +1,18 @@
 module.exports = function getAllFilesFromFolder(dir) {
 
     var filesystem = require("fs");
-    var results = [];
-
+    var results = []
+    var files = []
     filesystem.readdirSync(dir).forEach(function(file) {
 
-        file = dir+'/'+file;
-        var stat = filesystem.statSync(file);
+        filePath = dir+'/'+file;
+        files.push(file)
+        var stat = filesystem.statSync(filePath);
         if (stat && stat.isDirectory()) {
-            results = results.concat(getAllFilesFromFolder(file))
-        } else results.push(file);
+            results = results.concat(getAllFilesFromFolder(filePath))
+        } else results.push(filePath);
 
     });
 
-    return results;
+    return files;
 };
