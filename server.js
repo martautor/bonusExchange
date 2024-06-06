@@ -176,6 +176,41 @@ app.patch('/api/updateTaskState',  cors(corsOptions), (req, res, next) => {
         })
     });
 })
+
+app.post('/api/postComments', cors(corsOptions), (req, res, next) => {
+    console.log(req.body)
+    const fileName = __dirname + '/comments/' + `${req.body.card}.json`
+    fs.writeFile(fileName, JSON.stringify(req.body), function writeJSON(err) {
+        if (err) return res.json({
+            message: err.message
+        })
+        console.log('writing to ' + fileName);
+        res.status(200)
+    })
+    return res.json({
+        message: 'OK'
+    })
+})
+
+app.get('/api/getCommentsFileNames', cors(corsOptions), (req, res, next) => {
+    const dataPath = getAllFilesFromFolder(__dirname + '/comments/')
+    console.log(dataPath)
+    res.json({
+        comments: dataPath
+    })
+})
+
+app.get('/api/getCommentsData', cors(corsOptions), (req, res, next) => {
+    const card = req.query.card
+    if(card) {
+        res.sendFile(__dirname + '/comments/' + card + '.json')
+    } else {
+        res.json({
+            message: 'error'
+        })
+    } 
+})
+
 async function findData(clientData) {
     // console.log(clientData)
     const search = {'search': clientData}

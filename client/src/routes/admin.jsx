@@ -4,8 +4,7 @@ import sendAdminData from '../functions/sendAdminData';
 // import Form from '../components/Form';
 import AdminBar from '../components/adminPanel/AdminBar';
 import AdminFooter from '../components/adminPanel/AdminFooter';
-import AdminContent from '../components/adminPanel/AdminContent';
-import { brown } from '@mui/material/colors';
+import { Outlet } from 'react-router-dom';
 // Создаем тему с коричневым цветом
 const theme = createTheme({
   palette: {
@@ -88,7 +87,7 @@ const Admin = () => {
 const AdminPanel = (props) => {
     return (<div style={{height: '100vh', display: 'flex', flexDirection:"column", justifyContent: 'space-between', alignContent: 'center'}}>
     <AdminBar/>
-    <AdminContent data={props.data}/>
+    <Outlet/>
     <AdminFooter/>
     </div>)
 }

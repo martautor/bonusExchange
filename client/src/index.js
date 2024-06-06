@@ -15,6 +15,8 @@ import App from "./App";
 import About from "./routes/about";
 import ImageFileUpload from "./components/ImageFileUpload";
 import Admin from "./routes/admin";
+import Comments from "./routes/comments";
+import AdminContent from "./components/adminPanel/AdminContent";
 
 const router = createBrowserRouter([
   {
@@ -58,8 +60,22 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: "admin",
-    element: <Admin />
+    path: "/admin",
+    element: <Admin />,
+    children: [
+      {
+        index: true,
+        element: <AdminContent/>
+      },
+      {
+        path: '/admin/comments',
+        element: <Comments/>,
+        loader: async () => {
+          return await fetch(`${process.env.REACT_APP_SERVER_HOST}/api/getCommentsFileNames`)
+            .then(res => res.json())
+        }
+      }
+    ]
   },
 ]);
 
