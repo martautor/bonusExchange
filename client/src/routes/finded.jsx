@@ -32,6 +32,7 @@ const Finded = () => {
                 comment: comment
             })
         })
+        alert('Мы обязательно просмотрим ваш комментарий, и при необходимости свяжемся с вами!')
         navigate('/')
     }
     
@@ -42,7 +43,7 @@ const Finded = () => {
         } else {
             return (<>
             <InfoField data={data.searchers[0]}/>
-            <Button onClick={handleOpen} variant='text' color='inherit'>
+            <Button onClick={handleOpen} variant='contained' color='inherit'>
                 <Typography variant='span' sx={{fontSize: '12px'}}> Неверная информация? </Typography>
             </Button>
             </>)
@@ -53,7 +54,9 @@ const Finded = () => {
     style={{display: 'flex', flexDirection: 'column', alignContent: 'center', alignItems: 'center'}}>
         {render(data)}
         {open && (<>
+        <Typography variant='p'> Пожалуйста укажите какую информацию надо поменять.</Typography>
         <TextField
+          sx={{width: '16vw', mt: 1}}
           onChange={handleChange}
           id="outlined-multiline-static"
           label="Комментарий"
