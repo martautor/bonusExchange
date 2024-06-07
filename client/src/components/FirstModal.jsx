@@ -1,17 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, ListItemButton, ListItemText, Typography } from "@mui/material";
 import { brown } from "@mui/material/colors";
 import { useEffect, useState } from "react";
-// const style = {
-//     position: 'absolute',
-//     top: '50%',
-//     left: '50%',
-//     transform: 'translate(-50%, -50%)',
-//     width: 400,
-//     bgcolor: 'background.paper',
-//     border: '2px solid #000',
-//     boxShadow: 24,
-//     p: 4,
-//   };
+
 export default function FirstModal(props) {
     const [data, setData] = useState({})
     const str = props.card
@@ -27,10 +17,7 @@ export default function FirstModal(props) {
     }, [newStr])
     console.log(data)
     const [open, setOpen] = useState(false)
-    // const handleOpen = () => {
-    //     setOpen(true)
-    //     console.log(open)
-    // }
+
     const handleClose = () => {
         setOpen(false)
     }
