@@ -29,12 +29,10 @@ const storage = multer.diskStorage({
               if (err.message.startsWith('EEXIST')) {
                   return console.error('[Ошибка] Файл уже существует');
               }
-            } else {
-              
             }
             console.log('Directory created successfully!');
         })
-    cb(null, `upload/${dName}`);
+    cb(null, __dirname + `/upload/${dName}`); // 11.07
     },
     filename: function (req, file, cb) {
         cb(null, 'card.png')
@@ -52,7 +50,7 @@ app.post('/api/checkData', upload.single('file'), function (req, res, next) {
     console.log(json.completed)
     // json.comment = (json.comment === 'true')
     // console.log(json)
-    fs.writeFileSync(`upload/${dName}/data.json`, JSON.stringify(json))
+    fs.writeFileSync(__dirname + `/upload/${dName}/data.json`, JSON.stringify(json)) // 11.07
     // console.log('data: ',JSON.stringify(data))
     res.json('Файл успешно загружен');
   });
@@ -96,7 +94,6 @@ app.get('/api/getFolders', cors(corsOptions), async (req, res) => {
     all.map(card => {
             const fileName = __dirname + '/upload/' + card + '/data.json'
             const file = require(fileName)
-            console.log(file)
             if(file.completed === false) {
                 trueTasks.push(file.card)
             } else {
@@ -115,9 +112,7 @@ app.get('/api/getFolders', cors(corsOptions), async (req, res) => {
         })
         return
     }
-    console.log(method === 'false')
     if(method === 'true') {
-        console.log(...trueTasks)
         res.json({
             ...trueTasks
         })
