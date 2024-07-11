@@ -12,8 +12,9 @@
 /build
 
 # datas
-/uploads
-/upload
+/uploads/*
+/upload/*
+/comments/*
 
 # misc
 .DS_Store
