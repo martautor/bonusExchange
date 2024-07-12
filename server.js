@@ -23,7 +23,7 @@ app.get('/api/findData', async function (req, res) {
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const dName = req.body.card
-        fs.mkdir(path.join(__dirname + '/upload/', String(dName)),
+        fs.mkdirSync(path.join(__dirname + '/upload/', String(dName)),
         (err) => {
             if (err) {
               if (err.message.startsWith('EEXIST')) {
@@ -159,23 +159,31 @@ app.patch('/api/updateTaskState',  cors(corsOptions), (req, res, next) => {
     const fileName = __dirname + '/upload/' + card + '/data.json';
     const file = require(fileName);
     file.completed = !file.completed
-    fs.writeFile(fileName, JSON.stringify(file), function writeJSON(err) {
-        if (err) return res.json({
-            message: err.message
-        });
-        console.log(JSON.stringify(file));
-        console.log('writing to ' + fileName);
-        res.status(200)
-        return res.json({
-            message: 'OK'
+    console.log(`Карта: ${file.card} из состояния ${file.completed} в ${!(file.completed)}`)
+    async function mF() {
+        try {
+            return await fs.writeFile(fileName, JSON.stringify(file), function writeJSON(err) {
+            if (err) return res.json({
+                message: err.message
+            });
+            console.log(JSON.stringify(file))
+            console.log('writing to ' + fileName)
+            res.status(200)
+            return res.json({
+                message: 'OK'
+            })
         })
-    });
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    mF()
 })
 
 app.post('/api/postComments', cors(corsOptions), (req, res, next) => {
     console.log(req.body)
     const fileName = __dirname + '/comments/' + `${req.body.card}.json`
-    fs.writeFile(fileName, JSON.stringify(req.body), function writeJSON(err) {
+    fs.writeFileSync(fileName, JSON.stringify(req.body), function writeJSON(err) {
         if (err) return res.json({
             message: err.message
         })
